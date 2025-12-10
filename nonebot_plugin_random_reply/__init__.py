@@ -32,7 +32,7 @@ __plugin_meta__ = PluginMetadata(
     usage="""
     配置好后bot随机攻击群友，@机器人也可触发
     余额查询————开启硅基流动余额预警后，使用该命令可以查询API余额
-    """,
+    """，
     config=Config,
     extra={},
     type="application",
@@ -177,7 +177,7 @@ if balance_on:
 prompt = load_plugin_config(plugin_config.reply_prompt_url)
 logger.info("随机回复插件使用prompt："+ prompt)
 
-reload_prompt = on_command("重载七七人设", block=True, priority=1,permission=SUPERUSER)
+reload_prompt = on_command("重载人设", block=True, priority=1,permission=SUPERUSER)
 @reload_prompt.handle()
 async def _(
     bot: Bot, event: GroupMessageEvent, user_info: UserInfo = BotUserInfo()
