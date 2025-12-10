@@ -15,6 +15,7 @@ import time
 import random
 import httpx
 import nonebot
+from nonebot.permission import SUPERUSER
 
 from nonebot.plugin import PluginMetadata
 
@@ -176,6 +177,20 @@ if balance_on:
 prompt = load_plugin_config(plugin_config.reply_prompt_url)
 logger.info("随机回复插件使用prompt："+ prompt)
 
+reload_prompt = on_command("重载七七人设", block=True, priority=1,permission=SUPERUSER)
+@reload_prompt.handle()
+async def _(
+    bot: Bot, event: GroupMessageEvent, user_info: UserInfo = BotUserInfo()
+):
+    try:
+        global prompt
+        prompt = load_plugin_config(plugin_config.reply_prompt_url)
+        logger.info("随机回复插件使用prompt："+ prompt)
+    except Exception as e:
+        logger.error("随机回复插件切换prompt出错：" + str(e))
+        Text("随机回复插件切换prompt出错").finish()
+
+    await Text("随机回复插件切换prompt成功").finish()
 
 async def random_rule(event: GroupMessageEvent) -> bool:
     group_id = str(event.group_id)
@@ -367,6 +382,6 @@ if balance_on:
             balance = await get_current_balance(plugin_config.oneapi_key)
         except Exception as e:
             logger.error("获取余额出错" + str(e))
-            Text("获取余额出错").finish()
+            Text("获取余额出错")。finish()
 
-        await Text("当前余额为：" + str(balance)).finish()
+        await Text("当前余额为：" + str(balance))。finish()
